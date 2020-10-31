@@ -1,11 +1,13 @@
 package com.joseluisgs.retorfitcrud2020
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.joseluisgs.retorfitcrud2020.modelos.usuarios.Usuario
 import com.joseluisgs.retorfitcrud2020.modelos.usuarios.UsuarioDTO
 import com.joseluisgs.retorfitcrud2020.modelos.usuarios.UsuarioMapper
@@ -22,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var usuariosREST: UsuariosREST
     var CONECTADO = false
     lateinit var usuariosList: List<Usuario>
+    private lateinit var adapter: UsuarioListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         // Barra de progreso
         mainProgressBar.visibility = View.INVISIBLE
 
+        usuariosRecycler.layoutManager = LinearLayoutManager(this)
+
         // Probamos un botón para abri la actividad
         mainBtnAñadir.setOnClickListener {
             val intent = Intent(this, UsuarioActivity::class.java)
@@ -61,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         call.enqueue((object : Callback<List<UsuarioDTO>> {
             // Si fallamos
             override fun onFailure(call: Call<List<UsuarioDTO>>, t: Throwable) {
-                Log.e("ERROR: ", t.localizedMessage!!)
+                Log.e("REST ", t.localizedMessage!!)
             }
 
             // Si tenemos exito
@@ -72,8 +78,18 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Datos Obtenidos: " + usuariosList.size, Toast.LENGTH_SHORT)
                         .show()
                     usuariosList.forEach {
-                        Log.e("REST", it.toString())
+                        Log.i("REST", it.toString())
                     }
+
+                    adapter = UsuarioListAdapter(usuariosList as MutableList<Usuario>) {
+
+                    }
+
+                    usuariosRecycler.adapter = adapter
+                    // Avismos que ha cambiado
+                    adapter.notifyDataSetChanged()
+                    usuariosRecycler.setHasFixedSize(true)
+
                 }
             }
 

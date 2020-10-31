@@ -15,7 +15,7 @@ class UsuarioDTO(
     @SerializedName("id") val id: String,
     @SerializedName("email") val email: String,
     @SerializedName("name") val name: String,
-    @SerializedName("nick") val nick: String,
+    @SerializedName("username") val nick: String,
     @SerializedName("avatar") val avatar: String,
 )
 
