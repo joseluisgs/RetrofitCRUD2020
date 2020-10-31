@@ -31,8 +31,8 @@ class UsuarioMapper {
         return Usuario(
             dto.id,
             dto.email,
-            dto.firstName,
-            dto.lastName,
+            dto.name,
+            dto.nick,
             dto.avatar
         )
     }
@@ -46,8 +46,8 @@ class UsuarioMapper {
         return UsuarioDTO(
             model.id!!,
             model.email!!,
-            model.firstName!!,
-            model.lastName!!,
+            model.name!!,
+            model.nick!!,
             model.avatar!!
         )
     }

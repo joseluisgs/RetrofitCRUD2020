@@ -6,16 +6,16 @@ import com.google.gson.annotations.SerializedName
  * Esta clase nos sirve para parsear el JSON
  * @property id String
  * @property email String
- * @property firstName String
- * @property lastName String
+ * @property name String
+ * @property nick String
  * @property avatar String
  * @constructor
  */
 class UsuarioDTO(
     @SerializedName("id") val id: String,
     @SerializedName("email") val email: String,
-    @SerializedName("first_name") val firstName: String,
-    @SerializedName("last_name") val lastName: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("nick") val nick: String,
     @SerializedName("avatar") val avatar: String,
 )
 
