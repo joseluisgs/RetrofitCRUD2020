@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.Serializable
 
 
 class MainActivity : AppCompatActivity() {
@@ -52,7 +53,9 @@ class MainActivity : AppCompatActivity() {
         // Eventos de Botones
         // Probamos un botón para abri la actividad
         mainBtnAñadir.setOnClickListener {
-            val intent = Intent(this, UsuarioActivity::class.java)
+            val intent = Intent(this, UsuarioActivity::class.java).apply {
+                putExtra("MODO", "NUEVO")
+            }
             // Comenzamos la actividad
             startActivity(intent)
         }
@@ -96,6 +99,12 @@ class MainActivity : AppCompatActivity() {
     private fun mostrarUsuarios(respuesta: List<UsuarioDTO>) {
         usuariosList = UsuarioMapper.DTOToModel(respuesta)
         adapter = UsuarioListAdapter(usuariosList as MutableList<Usuario>) {
+            val intent = Intent(this, UsuarioActivity::class.java).apply {
+                putExtra("MODO", "VER")
+                putExtra("VALOR", it as Serializable)
+            }
+            // Comenzamos la actividad
+            startActivity(intent)
         }
         usuariosRecycler.adapter = adapter
         // Avismos que ha cambiado

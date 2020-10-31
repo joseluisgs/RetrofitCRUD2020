@@ -1,5 +1,7 @@
 package com.joseluisgs.retorfitcrud2020.modelos.usuarios
 
+import java.io.Serializable
+
 /**
  * Clase Modelo de Usuario
  * @property id String?
@@ -15,4 +17,4 @@ data class Usuario(
     val name: String?,
     val nick: String?,
     val avatar: String?,
-)
+) : Serializable
