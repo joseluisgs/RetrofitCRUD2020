@@ -9,38 +9,50 @@
         app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
-    <LinearLayout
-            android:orientation="vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" android:id="@+id/linearLayout">
         <TextView
                 android:id="@+id/itemUserTxtID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
                 android:padding="3dp"
-                android:text="ID" android:gravity="center" android:textStyle="bold"/>
+                android:text="ID" android:gravity="center" android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="4dp"
+                app:layout_constraintStart_toEndOf="@+id/itemUserIvAvatar"
+                android:layout_marginTop="4dp"/>
         <TextView
                 android:id="@+id/itemUserTxtNombre"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
-                android:text="Nombre" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
+                android:text="Nombre" android:gravity="center" android:textSize="14sp" android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/itemUserTxtID"
+                android:layout_marginTop="4dp" android:layout_marginStart="4dp"
+                app:layout_constraintStart_toEndOf="@+id/itemUserIvAvatar"/>
         <TextView
                 android:id="@+id/itemUserTxtNick"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
-                android:text="Nick" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
+                android:text="Nick" android:gravity="center" android:textSize="14sp" android:textStyle="bold"
+                android:layout_marginStart="4dp"
+                app:layout_constraintStart_toEndOf="@+id/itemUserIvAvatar" android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/itemUserTxtNombre"/>
         <TextView
                 android:id="@+id/itemUserTxtEmail"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="Email" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
+                android:text="Email" android:gravity="center" android:textSize="14sp" android:textStyle="bold"
+                android:layout_marginStart="4dp" app:layout_constraintStart_toEndOf="@+id/itemUserIvAvatar"
+                android:layout_marginTop="4dp" app:layout_constraintTop_toBottomOf="@+id/itemUserTxtNick"/>
         <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" tools:srcCompat="@tools:sample/avatars"
-                android:id="@+id/itemUserIvAvatar" android:padding="10dp"/>
-    </LinearLayout>
+                android:layout_width="131dp"
+                android:layout_height="125dp" tools:srcCompat="@tools:sample/avatars"
+                android:id="@+id/itemUserIvAvatar" android:padding="10dp"
+                tools:layout_editor_absoluteY="0dp" tools:layout_editor_absoluteX="0dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
 
