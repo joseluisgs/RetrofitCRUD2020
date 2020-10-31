@@ -43,15 +43,15 @@
         />
 
         <TextView
-                android:id="@+id/usuarioTxtApellidos"
+                android:id="@+id/usuarioTxtNick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Apellidos:"
+                android:text="Nick"
                 android:textSize="20dp"
                 android:layout_marginTop="5dp"
         />
         <EditText
-                android:id="@+id/usuarioEditApellidos"
+                android:id="@+id/usuarioEditNick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
         />

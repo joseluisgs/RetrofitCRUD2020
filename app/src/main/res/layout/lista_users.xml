@@ -20,7 +20,7 @@
             android:padding="3dp"
     />
     <TextView
-            android:id="@+id/listaUserTxtApellidos"
+            android:id="@+id/listaUserTxtNick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
