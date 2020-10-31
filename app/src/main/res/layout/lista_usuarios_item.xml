@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:layout_marginBottom="2dp"
-              android:background="#FFFFFF"
-              android:id="@+id/listaUsuarios">
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/listaUsuariosItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <TextView
+                android:id="@+id/itemUserTxtID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="ID" android:gravity="center" android:textStyle="bold"/>
+        <TextView
+                android:id="@+id/itemUserTxtNombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="Nombre" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
+        <TextView
+                android:id="@+id/itemUserTxtNick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="Nick" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
+        <TextView
+                android:id="@+id/itemUserTxtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Email" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
+        <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" tools:srcCompat="@tools:sample/avatars"
+                android:id="@+id/itemUserIvAvatar" android:padding="10dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
 
-    <TextView
-            android:id="@+id/itemUserTxtID"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            android:text="ID" android:gravity="center" android:textStyle="bold"/>
-
-    <TextView
-            android:id="@+id/itemUserTxtNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            android:text="Nombre" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
-    <TextView
-            android:id="@+id/itemUserTxtNick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="3dp"
-            android:text="Nick" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
-    <TextView
-            android:id="@+id/itemUserTxtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Email" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
-    <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" tools:srcCompat="@tools:sample/avatars"
-            android:padding="5dp"
-            android:id="@+id/itemUserIvAvatar"/>
-
-</LinearLayout>
