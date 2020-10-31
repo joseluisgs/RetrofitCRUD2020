@@ -31,12 +31,16 @@
                 android:textColor="#ffffff"
                 android:layout_marginBottom="5dp"/>
 
-        <ListView
-                android:id="@+id/mainListView"
+        <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-        </ListView>
+                android:layout_height="wrap_content" android:id="@+id/usuariosScroll">
+            <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/usuariosRecycler"
+                    android:background="#D6D6D6"
+                    tools:listitem="@layout/lista_usuarios_item"/>
+        </ScrollView>
 
     </LinearLayout>
     <ProgressBar
