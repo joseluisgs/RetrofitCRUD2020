@@ -114,13 +114,17 @@ class UsuarioActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Salva un usuario
+     * @param usuarioDTO UsuarioDTO
+     */
     private fun salvarUsuario(usuarioDTO: UsuarioDTO) {
         val call: Call<UsuarioDTO> = usuariosREST.create(usuarioDTO)
         call.enqueue((object : Callback<UsuarioDTO> {
             override fun onResponse(call: Call<UsuarioDTO>, response: Response<UsuarioDTO>) {
                 // Si ok
                 if (response.isSuccessful) {
-                    // Simulamos que lo borramos de la lista local, pues de la remota se ha hecho, pero como no cambia porque es un Fake API REST
+                    // Simulamos que lo salvamos de la lista local, pues de la remota se ha hecho, pero como no cambia porque es un Fake API REST
                     // por eso no vemos los cambios. De ahí que haga todo esto
                     // Lo importante es que si llegamos aquí es que lo hemos conseguido, porque el código es correcto
                     Toast.makeText(
@@ -158,29 +162,13 @@ class UsuarioActivity : AppCompatActivity() {
     }
 
     /**
-     * Actualizar
+     * Elimina un usuario
+     * @param id String
      */
-    private fun actualizar() {
-        if (Utils.isOnline(applicationContext)) {
-            if (datosValidados()) {
-                val usuario: Usuario = Usuario(
-                    email = usuarioTxtEmail.text.toString(),
-                    name = usuarioTxtNombre.text.toString(),
-                    nick = usuarioTxtNick.text.toString(),
-                    avatar = "https://eu.ui-avatars.com/api/?name=" + usuarioTxtNick.text.toString() + "&background=random"
-                )
-                actualizaUsuario(usuarioEditID.text.toString(), UsuarioMapper.toDTO(usuario))
-                // volver()
-            }
-        } else {
-            Toast.makeText(this, "Es necesaria una conexión a internet para funcionar", Toast.LENGTH_SHORT).show()
-        }
-    }
-
     private fun eliminarUsuario(id: String) {
         val call: Call<UsuarioDTO> = usuariosREST.delete(id)
         call.enqueue((object : Callback<UsuarioDTO> {
-            override fun onResponse(call: Call<UsuarioDTO>?, response: Response<UsuarioDTO>) {
+            override fun onResponse(call: Call<UsuarioDTO>, response: Response<UsuarioDTO>) {
                 // Si ok
                 if (response.isSuccessful) {
                     // Simulamos que lo borramos de la lista local, pues de la remota se ha hecho, pero como no cambia porque es un Fake API REST
@@ -207,6 +195,64 @@ class UsuarioActivity : AppCompatActivity() {
             }
         }))
     }
+
+
+    /**
+     * Actualizar
+     */
+    private fun actualizar() {
+        if (Utils.isOnline(applicationContext)) {
+            if (datosValidados()) {
+                val usuario: Usuario = Usuario(
+                    id = usuarioEditID.text.toString(),
+                    email = usuarioTxtEmail.text.toString(),
+                    name = usuarioTxtNombre.text.toString(),
+                    nick = usuarioTxtNick.text.toString(),
+                    avatar = "https://eu.ui-avatars.com/api/?name=" + usuarioTxtNick.text.toString() + "&background=random"
+                )
+                actualizarUsuario(usuarioEditID.text.toString(), UsuarioMapper.toDTO(usuario))
+                // volver()
+            }
+        } else {
+            Toast.makeText(this, "Es necesaria una conexión a internet para funcionar", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * Actualiza un usuario
+     * @param id String
+     * @param usuarioDTO UsuarioDTO
+     */
+    private fun actualizarUsuario(id: String, usuarioDTO: UsuarioDTO) {
+        val call: Call<UsuarioDTO> = usuariosREST.update(id, usuarioDTO)
+        call.enqueue((object : Callback<UsuarioDTO> {
+            override fun onResponse(call: Call<UsuarioDTO>, response: Response<UsuarioDTO>) {
+                // Si ok
+                if (response.isSuccessful) {
+                    // Simulamos que lo actualizamos de la lista local, pues de la remota se ha hecho, pero como no cambia porque es un Fake API REST
+                    // por eso no vemos los cambios. De ahí que haga todo esto
+                    // Lo importante es que si llegamos aquí es que lo hemos conseguido, porque el código es correcto
+                    Toast.makeText(
+                        applicationContext,
+                        "Usuario actualizado. Código Respuesta: " + response.code(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        applicationContext,
+                        "Error al actualizar. Código Respuesta : " + response.code(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(call: Call<UsuarioDTO>, t: Throwable) {
+                Toast.makeText(applicationContext, "Error al actualizar: " + t.localizedMessage, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }))
+    }
+
 
     private fun volver() {
         // Le pasamos la lista para simular que la hemos modificado en el servidor
