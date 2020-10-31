@@ -2,38 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:id="@+id/listaUser">
+              android:layout_marginBottom="2dp"
+              android:background="#FFFFFF"
+              android:id="@+id/listaUsuarios">
 
     <TextView
-            android:id="@+id/listaUserTxtID"
+            android:id="@+id/itemUserTxtID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
-    />
+            android:text="ID" android:gravity="center" android:textStyle="bold"/>
 
     <TextView
-            android:id="@+id/listaUserTxtNombre"
+            android:id="@+id/itemUserTxtNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
-    />
+            android:text="Nombre" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
     <TextView
-            android:id="@+id/listaUserTxtNick"
+            android:id="@+id/itemUserTxtNick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="3dp"
-    />
+            android:text="Nick" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
     <TextView
-            android:id="@+id/listaUserTxtEmail"
+            android:id="@+id/itemUserTxtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="3dp"
-    />
+            android:padding="5dp"
+            android:text="Email" android:gravity="center" android:textSize="18sp" android:textStyle="bold"/>
     <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content" tools:srcCompat="@tools:sample/avatars"
-            android:id="@+id/listaUserIvAvatar"/>
+            android:padding="5dp"
+            android:id="@+id/itemUserIvAvatar"/>
 
 </LinearLayout>
