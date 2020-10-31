@@ -3,7 +3,7 @@ package com.joseluisgs.retorfitcrud2020.modelos.usuarios
 import com.google.gson.annotations.SerializedName
 
 /**
- * Esta clase nos sirve para parsear el JSON
+ * Esta clase nos sirve para parsear el JSON cogeriamos los datos  que queremos
  * @property id String
  * @property email String
  * @property name String
