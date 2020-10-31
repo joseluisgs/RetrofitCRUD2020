@@ -20,9 +20,7 @@ import retrofit2.Response
 
 
 class MainActivity : AppCompatActivity() {
-    // Para manejar los elementos de la API REST
     lateinit var usuariosREST: UsuariosREST
-    var CONECTADO = false
     lateinit var usuariosList: List<Usuario>
     private lateinit var adapter: UsuarioListAdapter
 
@@ -33,33 +31,41 @@ class MainActivity : AppCompatActivity() {
         initUI()
     }
 
+    /**
+     * Iniciamos la IU
+     */
     private fun initUI() {
         // Comprobamos la conexión a internet
         if (Utils.isOnline(applicationContext)) {
             Toast.makeText(this, "Sí estás conectado a Internet", Toast.LENGTH_SHORT).show()
             // Si lo hay nos conectamos a la Api Rest para probar
             usuariosREST = UsuariosAPI.service
-            CONECTADO = true
-            listarProductos()
+            listarUsuarios()
 
         } else {
             Toast.makeText(this, "Es necesaria una conexión a internet para funcionar", Toast.LENGTH_SHORT).show()
         }
-
         // Barra de progreso
         mainProgressBar.visibility = View.INVISIBLE
-
+        // Recycler
         usuariosRecycler.layoutManager = LinearLayoutManager(this)
-
+        // Eventos de Botones
         // Probamos un botón para abri la actividad
         mainBtnAñadir.setOnClickListener {
             val intent = Intent(this, UsuarioActivity::class.java)
             // Comenzamos la actividad
             startActivity(intent)
         }
+        mainBtnObtener.setOnClickListener {
+            if (Utils.isOnline(applicationContext))
+                listarUsuarios();
+        }
     }
 
-    private fun listarProductos() {
+    /**
+     * Obtiene los usuarios como tarea asíncrona
+     */
+    private fun listarUsuarios() {
         mainProgressBar.visibility = View.VISIBLE
         // Creamos la tarea que llamará al servicio rest y la encolamos
         val call: Call<List<UsuarioDTO>> = usuariosREST.findAll()
@@ -73,28 +79,28 @@ class MainActivity : AppCompatActivity() {
             // Si tenemos exito
             override fun onResponse(call: Call<List<UsuarioDTO>>, response: Response<List<UsuarioDTO>>) {
                 if (response.isSuccessful) {
-                    // Hacemos el parser de JSON a nuestro Modelo
-                    usuariosList = UsuarioMapper.DTOToModel(response.body() as List<UsuarioDTO>)
-                    Toast.makeText(applicationContext, "Datos Obtenidos: " + usuariosList.size, Toast.LENGTH_SHORT)
+                    Toast.makeText(applicationContext, "Datos Obtenidos: " + response.body()?.size, Toast.LENGTH_SHORT)
                         .show()
-                    usuariosList.forEach {
-                        Log.i("REST", it.toString())
-                    }
-
-                    adapter = UsuarioListAdapter(usuariosList as MutableList<Usuario>) {
-
-                    }
-
-                    usuariosRecycler.adapter = adapter
-                    // Avismos que ha cambiado
-                    adapter.notifyDataSetChanged()
-                    usuariosRecycler.setHasFixedSize(true)
-
+                    // Hacemos el parser de JSON a nuestro Modelo
+                    mostrarUsuarios(response.body() as List<UsuarioDTO>)
                 }
             }
-
         }))
         mainProgressBar.visibility = View.INVISIBLE
+    }
+
+    /**
+     * Muestra los usuarios a partir de una lista
+     * @param respuesta List<UsuarioDTO>
+     */
+    private fun mostrarUsuarios(respuesta: List<UsuarioDTO>) {
+        usuariosList = UsuarioMapper.DTOToModel(respuesta)
+        adapter = UsuarioListAdapter(usuariosList as MutableList<Usuario>) {
+        }
+        usuariosRecycler.adapter = adapter
+        // Avismos que ha cambiado
+        adapter.notifyDataSetChanged()
+        usuariosRecycler.setHasFixedSize(true)
     }
 
 
