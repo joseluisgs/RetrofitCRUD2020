@@ -3,7 +3,6 @@ package com.joseluisgs.retorfitcrud2020
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,8 +20,8 @@ import java.io.Serializable
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var usuariosREST: UsuariosREST
-    lateinit var usuariosList: List<Usuario>
+    private lateinit var usuariosREST: UsuariosREST
+    private lateinit var usuariosList: MutableList<Usuario>
     private lateinit var adapter: UsuarioListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         mainBtnAñadir.setOnClickListener {
             val intent = Intent(this, UsuarioActivity::class.java).apply {
                 putExtra("MODO", "NUEVO")
+                // Esto lo hago porque como en verdad no hay datos quw cambien para simular su cambio
+                putExtra("LISTA", usuariosList as Serializable)
             }
             // Comenzamos la actividad
             startActivity(intent)
@@ -76,16 +77,27 @@ class MainActivity : AppCompatActivity() {
         call.enqueue((object : Callback<List<UsuarioDTO>> {
             // Si fallamos
             override fun onFailure(call: Call<List<UsuarioDTO>>, t: Throwable) {
-                Log.e("REST ", t.localizedMessage!!)
+                Toast.makeText(applicationContext, "Error al eliminar: " + t.localizedMessage, Toast.LENGTH_SHORT)
+                    .show()
             }
 
             // Si tenemos exito
             override fun onResponse(call: Call<List<UsuarioDTO>>, response: Response<List<UsuarioDTO>>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(applicationContext, "Datos Obtenidos: " + response.body()?.size, Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        applicationContext,
+                        "Datos Obtenidos: " + response.body()?.size + ". Código Respuesta: " + response.code(),
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                     // Hacemos el parser de JSON a nuestro Modelo
-                    mostrarUsuarios(response.body() as List<UsuarioDTO>)
+                    mostrarUsuarios(response.body() as MutableList<UsuarioDTO>)
+                } else {
+                    Toast.makeText(
+                        applicationContext,
+                        "Error al obtener la lista. Código Respuesta : " + response.code(),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }))
@@ -96,12 +108,14 @@ class MainActivity : AppCompatActivity() {
      * Muestra los usuarios a partir de una lista
      * @param respuesta List<UsuarioDTO>
      */
-    private fun mostrarUsuarios(respuesta: List<UsuarioDTO>) {
-        usuariosList = UsuarioMapper.DTOToModel(respuesta)
-        adapter = UsuarioListAdapter(usuariosList as MutableList<Usuario>) {
+    private fun mostrarUsuarios(respuesta: MutableList<UsuarioDTO>) {
+        usuariosList = (UsuarioMapper.DTOToModel(respuesta) as MutableList<Usuario>)
+        adapter = UsuarioListAdapter(usuariosList) {
             val intent = Intent(this, UsuarioActivity::class.java).apply {
                 putExtra("MODO", "VER")
                 putExtra("VALOR", it as Serializable)
+                // Esto lo hago porque como en verdad no hay datos quw cambien para simular su cambio
+                putExtra("LISTA", usuariosList as Serializable)
             }
             // Comenzamos la actividad
             startActivity(intent)
