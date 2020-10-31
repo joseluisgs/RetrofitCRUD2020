@@ -3,13 +3,13 @@ package com.joseluisgs.retorfitcrud2020.modelos.usuarios
 /**
  * Mapea entre DTO y Clase Modelo
  */
-class UsuarioMapper {
+object UsuarioMapper {
     /**
      * Una lista de DTO a Modelos
      * @param items List<UsuarioDTO>
      * @return List<Usuario>
      */
-    fun dtoToModel(items: List<UsuarioDTO>): List<Usuario> {
+    fun fromDTO(items: List<UsuarioDTO>): List<Usuario> {
         return items.map { fromDTO(it) }
     }
 
@@ -18,7 +18,7 @@ class UsuarioMapper {
      * @param items List<Usuario>
      * @return List<UsuarioDTO>
      */
-    fun modelToDTO(items: List<Usuario>): List<UsuarioDTO> {
+    fun toDTO(items: List<Usuario>): List<UsuarioDTO> {
         return items.map { toDTO(it) }
     }
 
@@ -31,8 +31,8 @@ class UsuarioMapper {
         return Usuario(
             dto.id,
             dto.email,
-            dto.firstName,
-            dto.lastName,
+            dto.name,
+            dto.nick,
             dto.avatar
         )
     }
@@ -46,8 +46,8 @@ class UsuarioMapper {
         return UsuarioDTO(
             model.id!!,
             model.email!!,
-            model.firstName!!,
-            model.lastName!!,
+            model.name!!,
+            model.nick!!,
             model.avatar!!
         )
     }

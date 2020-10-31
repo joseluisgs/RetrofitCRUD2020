@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".UsuarioActivity">
+        tools:context=".UsuarioActivity" tools:visibility="visible">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -43,15 +43,15 @@
         />
 
         <TextView
-                android:id="@+id/usuarioTxtApellidos"
+                android:id="@+id/usuarioTxtNick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Apellidos:"
+                android:text="Nick"
                 android:textSize="20dp"
                 android:layout_marginTop="5dp"
         />
         <EditText
-                android:id="@+id/usuarioEditApellidos"
+                android:id="@+id/usuarioEditNick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
         />
@@ -71,7 +71,7 @@
         <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="146dp" tools:srcCompat="@tools:sample/avatars"
-                android:id="@+id/usuarioIvAvatar"/>
+                android:id="@+id/usuarioIvAvatar" android:padding="5dp"/>
         <Button
                 android:id="@+id/usuarioBtnSalvar"
                 android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                 android:text="Eliminar"
                 android:background="#FF0000"
                 android:textColor="#ffffff"
-        />
+                tools:visibility="visible" android:visibility="visible"/>
 
     </LinearLayout>
 
