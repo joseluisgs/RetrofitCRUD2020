@@ -1,0 +1,56 @@
+package com.joseluisgs.retorfitcrud2020.modelos.usuarios
+
+/**
+ * Mapea entre DTO y Clase Modelo
+ */
+class UsuarioMapper {
+    /**
+     * Una lista de DTO a Modelos
+     * @param items List<UsuarioDTO>
+     * @return List<Usuario>
+     */
+    fun dtoToModel(items: List<UsuarioDTO>): List<Usuario> {
+        return items.map { fromDTO(it) }
+    }
+
+    /**
+     * Una lista de Modelos a DTO
+     * @param items List<Usuario>
+     * @return List<UsuarioDTO>
+     */
+    fun modelToDTO(items: List<Usuario>): List<UsuarioDTO> {
+        return items.map { toDTO(it) }
+    }
+
+    /**
+     * DTO a Modelo
+     * @param dto UsuarioDTO
+     * @return Usuario
+     */
+    fun fromDTO(dto: UsuarioDTO): Usuario {
+        return Usuario(
+            dto.id,
+            dto.email,
+            dto.firstName,
+            dto.lastName,
+            dto.avatar
+        )
+    }
+
+    /**
+     * Modelo a DTO
+     * @param model Usuario
+     * @return UsuarioDTO
+     */
+    fun toDTO(model: Usuario): UsuarioDTO {
+        return UsuarioDTO(
+            model.id!!,
+            model.email!!,
+            model.firstName!!,
+            model.lastName!!,
+            model.avatar!!
+        )
+    }
+}
+
+
