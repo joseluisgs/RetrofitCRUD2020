@@ -1,4 +1,4 @@
-package com.joseluisgs.retorfitcrud2020.services.usuarios
+package com.joseluisgs.retrofitcrud2020.services.usuarios
 
 object UsuariosAPI {
     // Direccion del Servicio, debe acabar en barra /

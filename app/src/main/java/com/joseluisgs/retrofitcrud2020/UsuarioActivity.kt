@@ -1,15 +1,16 @@
-package com.joseluisgs.retorfitcrud2020
+package com.joseluisgs.retrofitcrud2020
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.joseluisgs.retorfitcrud2020.modelos.usuarios.Usuario
-import com.joseluisgs.retorfitcrud2020.modelos.usuarios.UsuarioDTO
-import com.joseluisgs.retorfitcrud2020.modelos.usuarios.UsuarioMapper
-import com.joseluisgs.retorfitcrud2020.services.usuarios.UsuariosAPI
-import com.joseluisgs.retorfitcrud2020.services.usuarios.UsuariosREST
+import com.joseluisgs.retorfitcrud2020.R
+import com.joseluisgs.retrofitcrud2020.modelos.usuarios.Usuario
+import com.joseluisgs.retrofitcrud2020.modelos.usuarios.UsuarioDTO
+import com.joseluisgs.retrofitcrud2020.modelos.usuarios.UsuarioMapper
+import com.joseluisgs.retrofitcrud2020.services.usuarios.UsuariosAPI
+import com.joseluisgs.retrofitcrud2020.services.usuarios.UsuariosREST
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_usuario.*
 import retrofit2.Call

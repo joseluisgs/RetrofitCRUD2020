@@ -1,4 +1,4 @@
-package com.joseluisgs.retorfitcrud2020
+package com.joseluisgs.retrofitcrud2020
 
 import android.content.Context
 import android.net.ConnectivityManager

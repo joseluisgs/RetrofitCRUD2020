@@ -1,10 +1,11 @@
-package com.joseluisgs.retorfitcrud2020
+package com.joseluisgs.retrofitcrud2020
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.joseluisgs.retorfitcrud2020.modelos.usuarios.Usuario
+import com.joseluisgs.retorfitcrud2020.R
+import com.joseluisgs.retrofitcrud2020.modelos.usuarios.Usuario
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.lista_usuarios_item.view.*
 
