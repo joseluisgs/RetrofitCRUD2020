@@ -1,4 +1,4 @@
-package com.joseluisgs.retorfitcrud2020.services.usuarios
+package com.joseluisgs.retrofitcrud2020.services.usuarios
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

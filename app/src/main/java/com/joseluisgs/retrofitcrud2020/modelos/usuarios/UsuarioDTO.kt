@@ -1,4 +1,4 @@
-package com.joseluisgs.retorfitcrud2020.modelos.usuarios
+package com.joseluisgs.retrofitcrud2020.modelos.usuarios
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,6 +1,6 @@
-package com.joseluisgs.retorfitcrud2020.services.usuarios
+package com.joseluisgs.retrofitcrud2020.services.usuarios
 
-import com.joseluisgs.retorfitcrud2020.modelos.usuarios.UsuarioDTO
+import com.joseluisgs.retrofitcrud2020.modelos.usuarios.UsuarioDTO
 import retrofit2.Call
 import retrofit2.http.*
 
