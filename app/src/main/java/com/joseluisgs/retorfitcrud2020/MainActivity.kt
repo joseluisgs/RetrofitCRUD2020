@@ -54,8 +54,6 @@ class MainActivity : AppCompatActivity() {
         mainBtnAñadir.setOnClickListener {
             val intent = Intent(this, UsuarioActivity::class.java).apply {
                 putExtra("MODO", "NUEVO")
-                // Esto lo hago porque como en verdad no hay datos quw cambien para simular su cambio
-                putExtra("LISTA", usuariosList as Serializable)
             }
             // Comenzamos la actividad
             startActivity(intent)
@@ -109,7 +107,7 @@ class MainActivity : AppCompatActivity() {
      * @param respuesta List<UsuarioDTO>
      */
     private fun mostrarUsuarios(respuesta: MutableList<UsuarioDTO>) {
-        usuariosList = (UsuarioMapper.DTOToModel(respuesta) as MutableList<Usuario>)
+        usuariosList = (UsuarioMapper.fromDTO(respuesta) as MutableList<Usuario>)
         adapter = UsuarioListAdapter(usuariosList) {
             val intent = Intent(this, UsuarioActivity::class.java).apply {
                 putExtra("MODO", "VER")

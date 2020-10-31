@@ -19,7 +19,7 @@ interface UsuariosREST {
     // Crear un item
     //POST: https://my-json-server.typicode.com/joseluisgs/APIRESTFake/users/
     @POST("users/")
-    fun create(@Body user: UsuarioDTO): Call<UsuarioDTO?>?
+    fun create(@Body user: UsuarioDTO): Call<UsuarioDTO>
 
     // Elimina un item
     // DELETE: https://my-json-server.typicode.com/joseluisgs/APIRESTFake/users/{id}

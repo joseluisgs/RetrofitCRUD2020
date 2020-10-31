@@ -9,7 +9,7 @@ object UsuarioMapper {
      * @param items List<UsuarioDTO>
      * @return List<Usuario>
      */
-    fun DTOToModel(items: List<UsuarioDTO>): List<Usuario> {
+    fun fromDTO(items: List<UsuarioDTO>): List<Usuario> {
         return items.map { fromDTO(it) }
     }
 
@@ -18,7 +18,7 @@ object UsuarioMapper {
      * @param items List<Usuario>
      * @return List<UsuarioDTO>
      */
-    fun modelToDTO(items: List<Usuario>): List<UsuarioDTO> {
+    fun toDTO(items: List<Usuario>): List<UsuarioDTO> {
         return items.map { toDTO(it) }
     }
 

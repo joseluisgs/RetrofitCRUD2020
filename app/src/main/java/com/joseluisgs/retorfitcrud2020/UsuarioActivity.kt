@@ -2,12 +2,12 @@ package com.joseluisgs.retorfitcrud2020
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.joseluisgs.retorfitcrud2020.modelos.usuarios.Usuario
 import com.joseluisgs.retorfitcrud2020.modelos.usuarios.UsuarioDTO
+import com.joseluisgs.retorfitcrud2020.modelos.usuarios.UsuarioMapper
 import com.joseluisgs.retorfitcrud2020.services.usuarios.UsuariosAPI
 import com.joseluisgs.retorfitcrud2020.services.usuarios.UsuariosREST
 import com.squareup.picasso.Picasso
@@ -20,7 +20,6 @@ class UsuarioActivity : AppCompatActivity() {
     lateinit var modo: String
     lateinit var usuario: Usuario
     lateinit var usuariosREST: UsuariosREST
-    private lateinit var usuariosList: MutableList<Usuario>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +46,8 @@ class UsuarioActivity : AppCompatActivity() {
      */
     private fun initModo() {
         modo = intent.getStringExtra("MODO").toString()
-        usuariosList = (intent.getSerializableExtra("LISTA") as MutableList<Usuario>)
+        usuarioEditID.isFocusable = false
+        usuarioEditID.isEnabled = false;
         Toast.makeText(applicationContext, "Modo de Operación: $modo", Toast.LENGTH_SHORT)
             .show()
         if (modo == "NUEVO") {
@@ -62,13 +62,18 @@ class UsuarioActivity : AppCompatActivity() {
      */
     private fun cargarDatosNuevo() {
         usuarioBtnEliminar.visibility = View.INVISIBLE
-        usuarioEditID.isFocusable = false
-        usuarioEditID.isEnabled = false;
         //usuarioEditID.setText(System.currentTimeMillis().toString())
+        // Voy a inevntarme unos datos para no escribir
+        usuarioEditNombre.setText("Pepe Perez")
+        usuarioEditNick.setText("pepito")
+        usuarioEditEmail.setText("pepe@pepe.com")
         Picasso.get()
-            .load("https://eu.ui-avatars.com/api/?background=random")
+            .load("https://eu.ui-avatars.com/api/?name=" + usuarioTxtNick.text.toString() + "&background=random")
             .resize(250, 250).into(usuarioIvAvatar)
+        // Evento del botón
+        usuarioBtnSalvar.setOnClickListener { salvar() }
     }
+
 
     /**
      * Carga los datos Ver
@@ -83,7 +88,61 @@ class UsuarioActivity : AppCompatActivity() {
             .load(usuario.avatar)
             .resize(250, 250).into(usuarioIvAvatar)
 
+        // Evento del Botón
         usuarioBtnEliminar.setOnClickListener { eliminar() }
+        usuarioBtnSalvar.setOnClickListener { actualizar() }
+    }
+
+    /**
+     * Salva un usuario
+     */
+    private fun salvar() {
+        if (Utils.isOnline(applicationContext)) {
+            if (datosValidados()) {
+                val usuario: Usuario = Usuario(
+                    id = System.currentTimeMillis().toString(),
+                    email = usuarioTxtEmail.text.toString(),
+                    name = usuarioTxtNombre.text.toString(),
+                    nick = usuarioTxtNick.text.toString(),
+                    avatar = "https://eu.ui-avatars.com/api/?name=" + usuarioTxtNick.text.toString() + "&background=random"
+                )
+                salvarUsuario(UsuarioMapper.toDTO(usuario))
+                // volver()
+            }
+        } else {
+            Toast.makeText(this, "Es necesaria una conexión a internet para funcionar", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun salvarUsuario(usuarioDTO: UsuarioDTO) {
+        val call: Call<UsuarioDTO> = usuariosREST.create(usuarioDTO)
+        call.enqueue((object : Callback<UsuarioDTO> {
+            override fun onResponse(call: Call<UsuarioDTO>, response: Response<UsuarioDTO>) {
+                // Si ok
+                if (response.isSuccessful) {
+                    // Simulamos que lo borramos de la lista local, pues de la remota se ha hecho, pero como no cambia porque es un Fake API REST
+                    // por eso no vemos los cambios. De ahí que haga todo esto
+                    // Lo importante es que si llegamos aquí es que lo hemos conseguido, porque el código es correcto
+                    Toast.makeText(
+                        applicationContext,
+                        "Usuario insertado. Código Respuesta: " + response.code(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        applicationContext,
+                        "Error al insertar. Código Respuesta : " + response.code(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            //Si error
+            override fun onFailure(call: Call<UsuarioDTO>, t: Throwable) {
+                Toast.makeText(applicationContext, "Error al eliminar: " + t.localizedMessage, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }))
     }
 
     /**
@@ -91,16 +150,34 @@ class UsuarioActivity : AppCompatActivity() {
      */
     private fun eliminar() {
         if (Utils.isOnline(applicationContext)) {
-            if (datosValidados())
-                eliminarUsuario(usuarioEditID.text.toString())
-            volver()
+            eliminarUsuario(usuarioEditID.text.toString())
+            // volver()
+        } else {
+            Toast.makeText(this, "Es necesaria una conexión a internet para funcionar", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
+     * Actualizar
+     */
+    private fun actualizar() {
+        if (Utils.isOnline(applicationContext)) {
+            if (datosValidados()) {
+                val usuario: Usuario = Usuario(
+                    email = usuarioTxtEmail.text.toString(),
+                    name = usuarioTxtNombre.text.toString(),
+                    nick = usuarioTxtNick.text.toString(),
+                    avatar = "https://eu.ui-avatars.com/api/?name=" + usuarioTxtNick.text.toString() + "&background=random"
+                )
+                actualizaUsuario(usuarioEditID.text.toString(), UsuarioMapper.toDTO(usuario))
+                // volver()
+            }
         } else {
             Toast.makeText(this, "Es necesaria una conexión a internet para funcionar", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun eliminarUsuario(id: String) {
-        Log.i("REST", id)
         val call: Call<UsuarioDTO> = usuariosREST.delete(id)
         call.enqueue((object : Callback<UsuarioDTO> {
             override fun onResponse(call: Call<UsuarioDTO>?, response: Response<UsuarioDTO>) {
@@ -114,7 +191,6 @@ class UsuarioActivity : AppCompatActivity() {
                         "Usuario eliminado. Código Respuesta: " + response.code(),
                         Toast.LENGTH_SHORT
                     ).show()
-                    volver()
                 } else {
                     Toast.makeText(
                         applicationContext,
@@ -144,7 +220,7 @@ class UsuarioActivity : AppCompatActivity() {
      * @return Boolean
      */
     private fun datosValidados(): Boolean {
-        return (usuarioEditID.text.isNotBlank() && usuarioEditNombre.text.isNotBlank() && usuarioEditNick.text.isNotBlank() &&
+        return (usuarioEditNombre.text.isNotBlank() && usuarioEditNick.text.isNotBlank() &&
                 usuarioEditEmail.text.isNotBlank())
     }
 }
