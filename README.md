@@ -10,9 +10,14 @@
 ## Descripción
 
 Sencilla app para App para jugar un poco con API REST usando Retrofit
-Recomiendo ver [esta serie de vídeos](https://www.youtube.com/watch?v=R4XU8yPzSx0&list=PLpUMhvC6l7APq7y_FFfK-GEHvcUKqo6SC) para manejar correctamente esta potente librería
+Recomiendo ver [esta serie de vídeos](https://www.youtube.com/watch?v=R4XU8yPzSx0&list=PLpUMhvC6l7APq7y_FFfK-GEHvcUKqo6SC) para manejar correctamente esta potente librería Retrofit.
+
+Se ha usado como Fake API REST de prueba este proyecto que te pude interesar para tus propios proyectos para desarollar y probar tu propia API REST [API REST Fake](https://github.com/joseluisgs/APIRESTFake).
+Te recomiendo que le eches un ojo si la quieres usar a su documentación e indicaciones.
+
+
 ### Referencias
-Se ha seguido este tutorial aproximadamente
+- [Fake API REST](https://github.com/joseluisgs/APIRESTFake)
 
 Documentación Oficial: 
 - [Documentación Oficial](https://square.github.io/retrofit)
