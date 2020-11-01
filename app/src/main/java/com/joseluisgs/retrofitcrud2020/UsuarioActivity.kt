@@ -39,6 +39,7 @@ class UsuarioActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Es necesaria una conexión a internet para funcionar", Toast.LENGTH_SHORT).show()
         }
+
         initModo()
     }
 
@@ -69,7 +70,7 @@ class UsuarioActivity : AppCompatActivity() {
         usuarioEditNick.setText("pepito")
         usuarioEditEmail.setText("pepe@pepe.com")
         Picasso.get()
-            .load("https://eu.ui-avatars.com/api/?name=" + usuarioTxtNick.text.toString() + "&background=random")
+            .load("https://eu.ui-avatars.com/api/?name=" + usuarioEditNick.text.toString() + "&background=random")
             .resize(250, 250).into(usuarioIvAvatar)
         // Evento del botón
         usuarioBtnSalvar.setOnClickListener { salvar() }
@@ -102,10 +103,10 @@ class UsuarioActivity : AppCompatActivity() {
             if (datosValidados()) {
                 val usuario: Usuario = Usuario(
                     id = System.currentTimeMillis().toString(),
-                    email = usuarioTxtEmail.text.toString(),
-                    name = usuarioTxtNombre.text.toString(),
-                    nick = usuarioTxtNick.text.toString(),
-                    avatar = "https://eu.ui-avatars.com/api/?name=" + usuarioTxtNick.text.toString() + "&background=random"
+                    email = usuarioEditEmail.text.toString(),
+                    name = usuarioEditNombre.text.toString(),
+                    nick = usuarioEditNick.text.toString(),
+                    avatar = "https://eu.ui-avatars.com/api/?name=" + usuarioEditNick.text.toString() + "&background=random"
                 )
                 salvarUsuario(UsuarioMapper.toDTO(usuario))
                 // volver()
@@ -206,11 +207,12 @@ class UsuarioActivity : AppCompatActivity() {
             if (datosValidados()) {
                 val usuario: Usuario = Usuario(
                     id = usuarioEditID.text.toString(),
-                    email = usuarioTxtEmail.text.toString(),
-                    name = usuarioTxtNombre.text.toString(),
-                    nick = usuarioTxtNick.text.toString(),
+                    email = usuarioEditEmail.text.toString(),
+                    name = usuarioEditNombre.text.toString(),
+                    nick = usuarioEditNick.text.toString(),
                     avatar = "https://eu.ui-avatars.com/api/?name=" + usuarioTxtNick.text.toString() + "&background=random"
                 )
+                //Log.i("REST", usuario.toString())
                 actualizarUsuario(usuarioEditID.text.toString(), UsuarioMapper.toDTO(usuario))
                 // volver()
             }
